@@ -34,7 +34,6 @@ public class TitlebarPanel extends JPanel {
 
 	private static final String PLAYER_COUNT_URL = "http://kookykraftmc.net/index.php?pages/info/";
 
-
 	private final LauncherFrame frame;
 
 	public TitlebarPanel(Launcher launcher, final LauncherFrame frame) {

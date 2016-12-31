@@ -22,10 +22,9 @@ import java.util.concurrent.Executors;
 
 @Log
 public class NewsFeedManager extends ImageCache {
-	private static final String METADATA_URL = "http://launcher.grandtrizmo.com/news/latest.json",
-			IMAGE_PROVIDER_URL = "http://launcher.grandtrizmo.com/news/images/";
+	private static final String METADATA_URL = "http://launcher.grandtrizmo.com/kkmcstaff/news/latest.json",
+			IMAGE_PROVIDER_URL = "http://launcher.grandtrizmo.com/kkmcstaff/news/images/";
 
-	private static final String PLAYER_COUNT_URL = "https://mcapi.ca/query/play.kookykraftmc.net/info";
 
 	private static final int CACHE_TIME = 1000 * 60 * 20;
 

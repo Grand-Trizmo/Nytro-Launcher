@@ -630,7 +630,7 @@ public class OptionsView extends JPanel {
 			this.add(kkmcWebsite, c);
 
 			c.gridy = 6;
-			this.addLabel("The KookyKraft Launcher is made possible thanks to SKCraft's Launcher ane the Aether Launcher.", c, 12.0f);
+			this.addLabel("The KookyKraft Launcher is made possible thanks to SKCraft's Launcher and the Aether Launcher.", c, 12.0f);
 
 			c.gridy = 7;
 			FlatButton skcraftButton = this.createURLButton("View SKCraft's Launcher on GitHub", "https://github.com/SKCraft/Launcher", LauncherIcons.WEB);

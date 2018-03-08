@@ -85,7 +85,7 @@ public class PackManagerController {
         this.dataDir = Workspace.getDataDir(workspaceDir);
         workspaceFile = Workspace.getWorkspaceFile(workspaceDir);
 
-        this.distDir = new File(workspaceDir, "packs");
+        this.distDir = new File(workspaceDir, "_upload");
         launcherDir = new File(dataDir, "staging/launcher");
         File launcherConfigDir = new File(creator.getDataDir(), "launcher");
         this.webRoot = new File(dataDir, "staging/www");

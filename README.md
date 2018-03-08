@@ -3,9 +3,7 @@
 The Aether Launcher is based off SKCraft's Launcher. You can find his GitHub repo [here](https://github.com/SKCraft/Launcher).
 
 ### License
-The Aether II rewrite is under the [GNU GPL v3](http://www.gnu.org/licenses/gpl-3.0.en.html) license.
-
-Additionally, all assets of the Aether II rewrite (found in the [resources folder](https://git.gildedgames.com/GildedGames/Aether-1.8/tree/master/src/main/resources)) are under the [Creative Commons BY-NC-SA 4.0 license](http://creativecommons.org/licenses/by-nc-sa/4.0/).
+The Aether Launcher is under the [GNU LGPL v3](https://www.gnu.org/licenses/lgpl-3.0.en.html) license.
 
 ### Help support Gilded Games make mods and games on Patreon!
 You'll gain access to exclusive rewards and snapshot builds of the Aether Rewrite before anyone else!

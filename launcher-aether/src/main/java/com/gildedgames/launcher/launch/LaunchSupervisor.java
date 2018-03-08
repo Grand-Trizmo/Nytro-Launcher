@@ -12,6 +12,7 @@ import com.skcraft.launcher.auth.Session;
 import com.skcraft.launcher.launch.LaunchListener;
 import com.skcraft.launcher.launch.Runner;
 import com.skcraft.launcher.swing.SwingHelper;
+import lombok.Getter;
 import lombok.extern.java.Log;
 import org.apache.commons.io.FileUtils;
 
@@ -24,11 +25,16 @@ import java.util.logging.Level;
 public class LaunchSupervisor {
 	private final Launcher launcher;
 
+	@Getter
+	private boolean isBusy;
+
 	public LaunchSupervisor(Launcher launcher) {
 		this.launcher = launcher;
 	}
 
 	public ObservableFuture<Process> launch(IProgressReporter reporter, Instance instance, Session session, LaunchListener listener, LaunchProcessHandler handler) {
+		this.isBusy = true;
+
 		final File extractDir = this.launcher.createExtractDir();
 
 		// Get the process
@@ -65,6 +71,8 @@ public class LaunchSupervisor {
 			} catch (IOException e) {
 				log.log(Level.WARNING, "Failed to clean up " + extractDir.getAbsolutePath(), e);
 			}
+
+			this.isBusy = false;
 
 			SwingUtilities.invokeLater(listener::gameClosed);
 		}, MoreExecutors.sameThreadExecutor());

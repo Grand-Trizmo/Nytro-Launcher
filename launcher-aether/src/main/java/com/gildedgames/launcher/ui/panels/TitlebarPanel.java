@@ -23,9 +23,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
 
 public class TitlebarPanel extends JPanel {
-	private static final String REPORT_BUG_URL = "http://kookykraftmc.net/index.php?forums/";
+	private static final String REPORT_BUG_URL = "http://go.aetherii.com/2e8q1vf";
 
-	private static final String PATREON_URL = "http://shop.kookykraftmc.com";
+	private static final String PATREON_URL = "https://go.aetherii.com/2eGwM8b";
 
 	private final LauncherFrame frame;
 
@@ -34,7 +34,7 @@ public class TitlebarPanel extends JPanel {
 
 		Font font = LauncherFonts.OPEN_SANS_REGULAR;
 
-		this.setLayout(new MigLayout("align center, insets 0", "[][]16[]push[]20[][][]"));
+		this.setLayout(new MigLayout("align center, insets 0", "[][]16[]push[]12[]12[][][]"));
 		this.setBackground(LauncherStyles.LAUNCHER_BACKGROUND);
 
 		JLabel icon = new JLabel();
@@ -65,7 +65,7 @@ public class TitlebarPanel extends JPanel {
 
 		this.add(updateButton);
 
-		FlatButton patreon = new FlatButton("Donate to Support KKMC", LauncherFonts.OPEN_SANS_REGULAR.deriveFont(12.0f));
+		FlatButton patreon = new FlatButton("Support us on Patreon", LauncherFonts.OPEN_SANS_REGULAR.deriveFont(12.0f));
 		patreon.setStyle(FlatButton.ButtonStyle.TRANSPARENT);
 		patreon.setButtonIcon(LauncherIcons.PATREON);
 		patreon.addActionListener(e -> BrowserUtil.openPage(PATREON_URL));
@@ -73,7 +73,7 @@ public class TitlebarPanel extends JPanel {
 
 		this.add(patreon);
 
-		FlatButton bug = new FlatButton("Report an issue", LauncherFonts.OPEN_SANS_REGULAR.deriveFont(12.0f));
+		FlatButton bug = new FlatButton("Report issue", LauncherFonts.OPEN_SANS_REGULAR.deriveFont(12.0f));
 		bug.setStyle(FlatButton.ButtonStyle.TRANSPARENT);
 		bug.setButtonIcon(LauncherIcons.BUG);
 		bug.addActionListener(e -> BrowserUtil.openPage(REPORT_BUG_URL));

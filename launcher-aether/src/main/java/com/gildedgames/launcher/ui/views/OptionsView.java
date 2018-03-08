@@ -4,13 +4,15 @@ import com.gildedgames.launcher.ui.LauncherFrame;
 import com.gildedgames.launcher.ui.components.FlatButton;
 import com.gildedgames.launcher.ui.components.FlatTabPane;
 import com.gildedgames.launcher.ui.components.FlatTextField;
+import com.gildedgames.launcher.ui.components.InputIndicator;
 import com.gildedgames.launcher.ui.resources.LauncherFonts;
 import com.gildedgames.launcher.ui.resources.LauncherIcons;
 import com.gildedgames.launcher.ui.resources.LauncherStyles;
 import com.gildedgames.launcher.ui.styles.PushButtonUI;
+import com.gildedgames.launcher.user.GameKeyManager.KeyVerificationResponse;
 import com.gildedgames.launcher.util.BrowserUtil;
-import com.gildedgames.launcher.util.CacheDeleteRunnable;
-import com.gildedgames.launcher.util.CacheSizeCalculator;
+import com.gildedgames.launcher.util.FolderDeleteRunnable;
+import com.gildedgames.launcher.util.FolderSizeCalculator;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
@@ -24,7 +26,10 @@ import com.skcraft.launcher.util.SwingExecutor;
 import javax.annotation.Nullable;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.text.DecimalFormat;
 import java.util.HashSet;
 import java.util.Set;
@@ -52,6 +57,8 @@ public class OptionsView extends JPanel {
 	private void initComponents() {
 		GeneralPanel general = new GeneralPanel(this.launcher);
 
+		this.savable.clear();
+
 		this.pane.addTab("General", general);
 		this.savable.add(general);
 
@@ -77,20 +84,16 @@ public class OptionsView extends JPanel {
 		bottomButtons.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
 		bottomButtons.setOpaque(false);
 
-		FlatButton saveButton = new FlatButton("Apply", LauncherFonts.OPEN_SANS_REGULAR.deriveFont(12.0f));
+		FlatButton saveButton = new FlatButton("Save", LauncherFonts.OPEN_SANS_REGULAR.deriveFont(12.0f));
 		saveButton.setStyle(FlatButton.ButtonStyle.HIGHLIGHTED);
 		saveButton.setPreferredSize(new Dimension(100, 32));
 		saveButton.addActionListener(e -> {
-			if (!this.validateSettings()) {
-				return;
-			}
-
 			this.save();
 
 			this.frame.getLauncherLayout().back();
 		});
 
-		FlatButton closeButton = new FlatButton("Close", LauncherFonts.OPEN_SANS_REGULAR.deriveFont(12.0f));
+		FlatButton closeButton = new FlatButton("Back", LauncherFonts.OPEN_SANS_REGULAR.deriveFont(12.0f));
 		closeButton.setStyle(FlatButton.ButtonStyle.LIGHT);
 		closeButton.setPreferredSize(new Dimension(100, 32));
 		closeButton.addActionListener(e -> this.frame.getLauncherLayout().back());
@@ -136,9 +139,13 @@ public class OptionsView extends JPanel {
 	}
 
 	private class GeneralPanel extends SettingsPanel {
-		private final JTextField gameKey;
+		private final JTextField keyInput;
 
 		private final JLabel cacheSizeLabel;
+
+		private final InputIndicator keyInputIndicator;
+
+		private final FlatButton verifyKeyButton;
 
 		public GeneralPanel(Launcher launcher) {
 			super();
@@ -192,7 +199,7 @@ public class OptionsView extends JPanel {
 
 			c.gridy = 4;
 
-			this.addLabel("Cache", c, 16.0f);
+			this.addLabel("Temporary files", c, 16.0f);
 
 			c.gridy = 5;
 
@@ -220,6 +227,7 @@ public class OptionsView extends JPanel {
 
 			FlatButton clearCacheButton = new FlatButton("Clear cache", LauncherFonts.OPEN_SANS_REGULAR.deriveFont(12.0f));
 			clearCacheButton.setStyle(FlatButton.ButtonStyle.LIGHT);
+			clearCacheButton.setEnabled(!OptionsView.this.frame.getLaunchSupervisor().isBusy() && !OptionsView.this.frame.isUpdating());
 
 			clearCacheButton.addActionListener(e -> {
 				boolean result = SwingHelper.confirmDialog(OptionsView.this.frame, "Clearing the cache usually serves no benefit, and may cause issues.\n\nOnly do this if you're absolutely certain, or a developer has asked you to.",
@@ -229,7 +237,12 @@ public class OptionsView extends JPanel {
 					return;
 				}
 
-				CacheDeleteRunnable clearTask = new CacheDeleteRunnable(launcher.getCacheDir().toPath());
+				Path[] paths = new Path[] {
+						OptionsView.this.launcher.getCacheDir().toPath(),
+						OptionsView.this.launcher.getTemporaryDir().toPath()
+				};
+
+				FolderDeleteRunnable clearTask = new FolderDeleteRunnable(paths);
 
 				ListenableFuture<Void> clearFuture = launcher.getExecutor().submit(clearTask);
 
@@ -283,16 +296,92 @@ public class OptionsView extends JPanel {
 
 			c.gridy = 15;
 
-			this.gameKey = new FlatTextField("Game key");
-			this.gameKey.setPreferredSize(new Dimension(400, 25));
+			this.keyInput = new FlatTextField("Game key");
+			this.keyInput.setPreferredSize(new Dimension(400, 32));
+			this.keyInput.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyTyped(KeyEvent e) {
+					GeneralPanel.this.keyInputIndicator.setVisible(false);
+				}
+			});
 
-			this.add(this.gameKey, c);
+			this.verifyKeyButton = new FlatButton("Verify", LauncherFonts.OPEN_SANS_REGULAR.deriveFont(12.0f));
+			this.verifyKeyButton.addActionListener(e -> this.validateKey());
+			this.verifyKeyButton.setPreferredSize(new Dimension(90, 32));
+
+			JPanel keyInputPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+			keyInputPanel.add(this.keyInput);
+			keyInputPanel.add(this.verifyKeyButton);
+			keyInputPanel.setOpaque(false);
+
+			this.add(keyInputPanel, c);
+
+			c.gridy = 16;
+
+			this.keyInputIndicator = new InputIndicator();
+
+			this.add(this.keyInputIndicator, c);
+		}
+
+		private void validateKey() {
+			this.verifyKeyButton.setEnabled(false);
+
+			this.keyInputIndicator.setVisible(true);
+			this.keyInputIndicator.setText("Communicating with servers");
+			this.keyInputIndicator.setChecking(true);
+
+			String key = this.keyInput.getText();
+
+			ListenableFuture<KeyVerificationResponse> future = OptionsView.this.frame.getKeyManager().validate(key);
+
+			Futures.addCallback(future, new FutureCallback<KeyVerificationResponse>() {
+				@Override
+				public void onSuccess(@Nullable KeyVerificationResponse result) {
+					if (result == null) {
+						throw new RuntimeException("Key verification response is null");
+					}
+
+					GeneralPanel.this.keyInputIndicator.setChecking(false);
+
+					if (result.isValid()) {
+						if (result.isRevoked()) {
+							GeneralPanel.this.keyInputIndicator.setText("The key has been revoked. Reason: " + result.getRevocationReason());
+							GeneralPanel.this.keyInputIndicator.setValid(true);
+						} else {
+							GeneralPanel.this.keyInputIndicator.setText("Verified");
+							GeneralPanel.this.keyInputIndicator.setValid(true);
+						}
+					} else {
+						GeneralPanel.this.keyInputIndicator.setText("Invalid key");
+						GeneralPanel.this.keyInputIndicator.setValid(false);
+					}
+
+					if (result.isRevoked()) {
+						SwingHelper.showErrorDialog(OptionsView.this.frame, "The key you have entered has been revoked. Reason: \n\n" + result.getRevocationReason(), "Key verification error");
+					}
+
+					GeneralPanel.this.verifyKeyButton.setEnabled(true);
+				}
+
+				@Override
+				public void onFailure(Throwable t) {
+					GeneralPanel.this.keyInputIndicator.setText("There was a problem checking the key. Please try again later.");
+					GeneralPanel.this.keyInputIndicator.setValid(false);
+					GeneralPanel.this.keyInputIndicator.setChecking(false);
+					GeneralPanel.this.verifyKeyButton.setEnabled(true);
+				}
+			});
 		}
 
 		private void refreshCacheSize() {
 			this.cacheSizeLabel.setText("(calculating cache size)");
 
-			ListenableFuture<Long> cacheSizeFuture = OptionsView.this.launcher.getExecutor().submit(new CacheSizeCalculator(OptionsView.this.launcher.getCacheDir().toPath()));
+			Path[] paths = new Path[] {
+					OptionsView.this.launcher.getCacheDir().toPath(),
+					OptionsView.this.launcher.getTemporaryDir().toPath()
+			};
+
+			ListenableFuture<Long> cacheSizeFuture = OptionsView.this.launcher.getExecutor().submit(new FolderSizeCalculator(paths));
 
 			Futures.addCallback(cacheSizeFuture, new FutureCallback<Long>() {
 				@Override
@@ -313,12 +402,14 @@ public class OptionsView extends JPanel {
 
 		@Override
 		public void save(Launcher launcher, Configuration config) {
-			config.setGameKey(this.gameKey.getText());
+			config.setGameKey(this.keyInput.getText());
 		}
 
 		@Override
 		public void load(Launcher launcher, Configuration config) {
-			this.gameKey.setText(config.getGameKey());
+			this.keyInput.setText(config.getGameKey());
+
+			this.validateKey();
 		}
 
 		@Override
@@ -518,34 +609,26 @@ public class OptionsView extends JPanel {
 
 			c.gridy = 1;
 
-			this.addLabel("KookyKraft Launcher", c, 14.0f);
+			this.addLabel("Official Release", c, 14.0f);
 
 			c.gridy = 2;
-			FlatButton Trizmocredit = this.createURLButton("Project By Grand_Trizmo", "http://grandtrizmo.com", LauncherIcons.GITLAB);
-			this.add(Trizmocredit, c);
-
-			c.gridy = 3;
-			FlatButton Griffincredit = this.createURLButton("Art By Griffin4cats", "http://grandtrizmo.com", LauncherIcons.GITLAB);
-			this.add(Griffincredit, c);
-
-			c.gridy = 4;
-			FlatButton kkmcWebsite = this.createURLButton("The official KookyKraft website", "http://kookykraftmc.com", LauncherIcons.WEB);
-			this.add(kkmcWebsite, c);
-
-			c.gridy = 5;
-			this.add(Box.createVerticalStrut(24), c);
-
-			c.gridy = 6;
-			this.addLabel("The KookyKraft Launcher is made possible thanks to SKCraft's Launcher ane the Aether Launcher.", c, 12.0f);
-
-			c.gridy = 7;
-			FlatButton skcraftButton = this.createURLButton("View SKCraft's Launcher on GitHub", "https://github.com/SKCraft/Launcher", LauncherIcons.WEB);
-			this.add(skcraftButton, c);
-
-			c.gridy = 8;
 			FlatButton gitlabAether = this.createURLButton("View the source code on GitLab", "https://git.gildedgames.com/GildedGames/Aether-Launcher", LauncherIcons.GITLAB);
 			this.add(gitlabAether, c);
-	}
+
+			c.gridy = 3;
+			FlatButton aetherWebsite = this.createURLButton("The official Aether website", "http://aetherii.com", LauncherIcons.WEB);
+			this.add(aetherWebsite, c);
+
+			c.gridy = 4;
+			this.add(Box.createVerticalStrut(24), c);
+
+			c.gridy = 5;
+			this.addLabel("The Aether Launcher is made possible thanks to SKCraft's Launcher.", c, 12.0f);
+
+			c.gridy = 6;
+			FlatButton skcraftButton = this.createURLButton("View SKCraft's Launcher on GitHub", "https://github.com/SKCraft/Launcher", LauncherIcons.WEB);
+			this.add(skcraftButton, c);
+		}
 
 		private FlatButton createURLButton(String text, String url, ImageIcon icon) {
 			FlatButton btn = new FlatButton(text, LauncherFonts.OPEN_SANS_REGULAR.deriveFont(12.0f));

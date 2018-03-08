@@ -8,7 +8,7 @@ import com.skcraft.launcher.util.HttpRequest;
 import lombok.Getter;
 
 public class GameKeyManager {
-	private static final String VERIFY_URL = "https://files.gildedgames.com/minecraft/launcher/v2/packages/keys/verify/%s";
+	private static final String VERIFY_URL = "http://localhost:8080/keys/verify/%s";
 
 	private final Launcher launcher;
 

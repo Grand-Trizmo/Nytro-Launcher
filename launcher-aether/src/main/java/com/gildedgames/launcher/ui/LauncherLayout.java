@@ -37,6 +37,10 @@ public class LauncherLayout {
 			this.root.removeAll();
 			this.root.add(view, BorderLayout.CENTER);
 
+			if (view instanceof IListeningView) {
+				((IListeningView) view).reload();
+			}
+			
 			this.root.revalidate();
 			this.root.repaint();
 		});

@@ -27,6 +27,8 @@ public class LauncherIcons {
 
 	public static final ImageIcon WINDOW_ICON;
 
+	public static final ImageIcon INPUT_VALID, INPUT_INVALID;
+
 	static {
 		GEAR = loadIcon("com/gildedgames/assets/icons/16/gear.png");
 		ADD = loadIcon("com/gildedgames/assets/icons/16/add.png");
@@ -46,6 +48,10 @@ public class LauncherIcons {
 		WINDOW_MAXIMIZE = loadIcon("com/gildedgames/assets/icons/16/maximize.png");
 
 		WINDOW_ICON = loadIcon("com/gildedgames/assets/titlebar/window-icon.png");
+
+		INPUT_VALID = loadIcon("com/gildedgames/assets/icons/16/valid.png");
+		INPUT_INVALID = loadIcon("com/gildedgames/assets/icons/16/invalid.png");
+
 	}
 
 	public static ImageIcon loadIcon(String path) {

@@ -64,9 +64,9 @@ public class UpdateButton extends FlatButton {
 			this.setButtonIcon(LauncherIcons.REFRESH);
 			this.setStyle(ButtonStyle.TRANSPARENT);
 		} else if (this.isUpdatePendingRestart) {
-			this.setText("Updates Pending");
+			this.setText("Updates available");
 			this.setButtonIcon(LauncherIcons.WARN);
-			this.setStyle(ButtonStyle.HIGHLIGHTED);
+//			this.setStyle(ButtonStyle.HIGHLIGHTED);
 		}
 
 		this.setVisible(this.isUpdatePendingRestart || this.isUpdateInstalling);

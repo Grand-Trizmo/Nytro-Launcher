@@ -24,8 +24,16 @@ public class UserIndicator extends JComponent {
 
 	public UserIndicator(AvatarManager avatarManager) {
 		this.avatarManager = avatarManager;
+	}
 
-		this.setPreferredSize(new Dimension(120, 50));
+	@Override
+	public Dimension getPreferredSize() {
+		return new Dimension(120, 50);
+	}
+
+	@Override
+	public Dimension getMinimumSize() {
+		return this.getPreferredSize();
 	}
 
 	public void setAccount(Account account) {

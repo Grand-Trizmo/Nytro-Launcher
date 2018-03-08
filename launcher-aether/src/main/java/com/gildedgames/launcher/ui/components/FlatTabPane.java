@@ -1,10 +1,12 @@
 package com.gildedgames.launcher.ui.components;
 
 import com.gildedgames.launcher.ui.resources.LauncherFonts;
+import com.gildedgames.launcher.ui.styles.FlatScrollbarUI;
 import com.gildedgames.launcher.util.Pair;
 import lombok.Setter;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -15,6 +17,8 @@ public class FlatTabPane extends JPanel {
 	private final List<Pair<FlatTabButton, JComponent>> tabs = new ArrayList<>();
 
 	private final JPanel layoutRoot = new JPanel();
+
+	private final JScrollPane scroller = new JScrollPane(this.layoutRoot);
 
 	private final JPanel buttonContainer = new JPanel();
 
@@ -30,6 +34,13 @@ public class FlatTabPane extends JPanel {
 		this.layoutRoot.setOpaque(false);
 		this.layoutRoot.setBorder(BorderFactory.createEmptyBorder(4, 20, 4, 20));
 
+		this.scroller.setOpaque(false);
+		this.scroller.getViewport().setOpaque(false);
+		this.scroller.setBorder(BorderFactory.createEmptyBorder());
+		this.scroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		this.scroller.getVerticalScrollBar().setUI(new FlatScrollbarUI(this.scroller.getVerticalScrollBar()));
+		this.scroller.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 10));
+
 		FlowLayout buttonLayout = new FlowLayout();
 		buttonLayout.setAlignment(FlowLayout.LEFT);
 
@@ -38,7 +49,7 @@ public class FlatTabPane extends JPanel {
 		this.buttonContainer.add(Box.createHorizontalStrut(12));
 
 		this.add(this.buttonContainer, BorderLayout.NORTH);
-		this.add(this.layoutRoot, BorderLayout.CENTER);
+		this.add(this.scroller, BorderLayout.CENTER);
 	}
 
 	public void addTab(String title, JComponent comp) {

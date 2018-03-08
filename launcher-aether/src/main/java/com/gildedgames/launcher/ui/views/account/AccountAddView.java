@@ -177,7 +177,7 @@ public class AccountAddView extends JPanel {
 	}
 
 	protected String getHeader() {
-		return "KookyKraft requires you to login to Mojang to play.";
+		return "The Aether is a mod for Minecraft, which requires a Mojang account to play.";
 	}
 
 	public void setCancelable(boolean cancel) {

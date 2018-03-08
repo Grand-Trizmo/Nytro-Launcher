@@ -201,7 +201,7 @@ public class LoginDialog extends JDialog {
         }
     }
 
-    private class LoginCallable implements Callable<Session>, ProgressObservable {
+    private class LoginCallable implements Callable<Session>,ProgressObservable {
         private final String id;
         private final String password;
 

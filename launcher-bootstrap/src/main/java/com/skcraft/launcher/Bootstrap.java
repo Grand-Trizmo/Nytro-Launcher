@@ -50,7 +50,7 @@ public class Bootstrap {
         boolean portable = isPortableMode();
 
         if (!isJava8()) {
-            JOptionPane.showMessageDialog(null, "The KKMC launcher requires Java 8 or newer. Please update your installation of Java.", "Outdated Java", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "The Aether launcher requires Java 8 or newer. Please update your installation of Java.", "Outdated Java", JOptionPane.ERROR_MESSAGE);
 
             return;
         }

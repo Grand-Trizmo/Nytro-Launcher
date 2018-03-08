@@ -16,7 +16,7 @@ public class FlatButton extends JButton {
 		NORMAL(new Color(0x333d47), new Color(0x4d5c6b), new Color(0x333d47), Color.WHITE),
 		DISABLED(new Color(0x777777), new Color(0x777777), new Color(0x777777), new Color(0x444444)),
 		LIGHT(new Color(0x333d47), new Color(0x4d5c6b), new Color(0x333d47), Color.WHITE),
-		HIGHLIGHTED(new Color(0x3078c2), new Color(0x3d8ee0), new Color(0x2f68a2), Color.WHITE),
+		HIGHLIGHTED(new Color(0x2f68a2), new Color(0x3d8ee0), new Color(0x2f68a2), Color.WHITE),
 		TRANSPARENT(null, null, new Color(0, 0, 0, 40), Color.WHITE);
 
 		private final Color bgNormal, bgHover, bgPressed;

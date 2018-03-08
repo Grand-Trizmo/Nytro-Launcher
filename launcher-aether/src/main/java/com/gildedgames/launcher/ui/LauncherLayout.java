@@ -25,13 +25,7 @@ public class LauncherLayout {
 	public void back() {
 		this.stack.pop();
 
-		JComponent panel = this.stack.peek();
-
 		this.setView(this.stack.peek());
-
-		if (panel instanceof IListeningView) {
-			((IListeningView) panel).reload();
-		}
 	}
 
 	public JPanel getRoot() {

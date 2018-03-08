@@ -6,11 +6,14 @@ import com.gildedgames.launcher.ui.resources.NewsFeedManager;
 import com.gildedgames.launcher.ui.resources.NewsFeedManager.NewsFeed;
 import com.gildedgames.launcher.ui.resources.NewsFeedManager.NewsPost;
 import com.gildedgames.launcher.ui.resources.NewsFeedManager.NewsSection;
-import com.gildedgames.launcher.ui.styles.FlatScrollbarUI;
 import com.google.common.util.concurrent.ListenableFuture;
 
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicScrollBarUI;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.geom.RoundRectangle2D;
 
 public class NewsFeedPanel extends JPanel {
 	private JPanel list;
@@ -26,23 +29,19 @@ public class NewsFeedPanel extends JPanel {
 
 		this.list = new JPanel();
 		this.list.setLayout(new BoxLayout(this.list, BoxLayout.Y_AXIS));
-		this.list.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 		this.list.setOpaque(false);
 
 		this.add(this.list, BorderLayout.NORTH);
 
-		this.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+		this.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 	}
 
 	public void repopulate(NewsFeedManager manager, NewsFeed feed) {
 		this.list.removeAll();
 
 		for (NewsSection section : feed.getSections()) {
-			Color color = new Color(section.getColor());
-
-			JPanel row = new TransparentPanel(new BorderLayout());
-			row.setBackground(new Color(color.getRed(), color.getGreen(), color.getBlue(), 0));
-			row.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10));
+			JPanel row = new JPanel(new BorderLayout());
+			row.setOpaque(false);
 
 			this.list.add(row);
 
@@ -66,7 +65,7 @@ public class NewsFeedPanel extends JPanel {
 			cardsPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
 			JScrollBar horBar = cardsPane.getHorizontalScrollBar();
-			horBar.setUI(new FlatScrollbarUI(horBar));
+			horBar.setUI(new FlatScrollbar(horBar));
 			horBar.setOpaque(false);
 			horBar.setUnitIncrement(9);
 
@@ -87,22 +86,68 @@ public class NewsFeedPanel extends JPanel {
 		return label;
 	}
 
-	public class TransparentPanel extends JPanel {
-		public TransparentPanel() {
-			this(null);
+	public class FlatScrollbar extends BasicScrollBarUI {
+		private boolean isHovered;
+
+		public FlatScrollbar(JScrollBar bar) {
+			bar.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					FlatScrollbar.this.isHovered = true;
+					bar.repaint();
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					FlatScrollbar.this.isHovered = false;
+					bar.repaint();
+				}
+			});
 		}
 
-		public TransparentPanel(LayoutManager manager) {
-			super(manager);
-
-			this.setOpaque(false);
-		}
 		@Override
-		public void paintComponent(Graphics g) {
-			g.setColor(this.getBackground());
-			g.fillRect(0, 0, this.getWidth(), this.getHeight());
+		protected void paintTrack(Graphics g, JComponent c, Rectangle trackBounds) {
+			g.setColor(new Color(0, 0, 0, 90));
 
-			super.paintComponent(g);
+			Graphics2D g2 = (Graphics2D) g;
+			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+			g2.fill(new RoundRectangle2D.Float(trackBounds.x, trackBounds.y, trackBounds.width, trackBounds.height - 10, 8, 8));
+		}
+
+		@Override
+		protected void paintThumb(Graphics g, JComponent c, Rectangle thumbBounds) {
+			g.setColor(this.isHovered ? new Color(255, 255, 255, 220) : new Color(190, 190, 190, 255));
+
+			Graphics2D g2 = (Graphics2D) g;
+			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+			g2.fill(new RoundRectangle2D.Float(thumbBounds.x, thumbBounds.y, thumbBounds.width, thumbBounds.height - 10, 8, 8));
+		}
+
+		@Override
+		protected JButton createDecreaseButton(int orientation) {
+			JButton b = new JButton();
+			b.setVisible(false);
+			b.setPreferredSize(new Dimension(0, 0));
+			b.setMaximumSize(new Dimension(0, 0));
+
+			return b;
+		}
+
+		@Override
+		protected JButton createIncreaseButton(int orientation) {
+			JButton b = new JButton();
+			b.setVisible(false);
+			b.setPreferredSize(new Dimension(0, 0));
+			b.setMaximumSize(new Dimension(0, 0));
+
+			return b;
+		}
+
+		@Override
+		protected void configureScrollBarColors() {
+
 		}
 	}
 }

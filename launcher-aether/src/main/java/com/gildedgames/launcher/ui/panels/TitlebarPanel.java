@@ -1,6 +1,5 @@
 package com.gildedgames.launcher.ui.panels;
 
-import com.fasterxml.jackson.core.JsonFactory;
 import com.gildedgames.launcher.ui.LauncherFrame;
 import com.gildedgames.launcher.ui.components.FlatButton;
 import com.gildedgames.launcher.ui.components.WindowButton;
@@ -9,12 +8,8 @@ import com.gildedgames.launcher.ui.resources.LauncherFonts;
 import com.gildedgames.launcher.ui.resources.LauncherIcons;
 import com.gildedgames.launcher.ui.resources.LauncherStyles;
 import com.gildedgames.launcher.util.BrowserUtil;
-import com.google.common.util.concurrent.ListenableFuture;
 import com.skcraft.launcher.Launcher;
 import net.miginfocom.swing.MigLayout;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
@@ -32,8 +27,6 @@ public class TitlebarPanel extends JPanel {
 
 	private static final String PATREON_URL = "http://shop.kookykraftmc.com";
 
-	private static final String PLAYER_COUNT_URL = "http://kookykraftmc.net/index.php?pages/info/";
-
 	private final LauncherFrame frame;
 
 	public TitlebarPanel(Launcher launcher, final LauncherFrame frame) {
@@ -41,7 +34,7 @@ public class TitlebarPanel extends JPanel {
 
 		Font font = LauncherFonts.OPEN_SANS_REGULAR;
 
-		this.setLayout(new MigLayout("align center, insets 0", "[][]16[]push[]12[]12[][][]"));
+		this.setLayout(new MigLayout("align center, insets 0", "[][]16[]push[]20[][][]"));
 		this.setBackground(LauncherStyles.LAUNCHER_BACKGROUND);
 
 		JLabel icon = new JLabel();
@@ -72,14 +65,6 @@ public class TitlebarPanel extends JPanel {
 
 		this.add(updateButton);
 
-		FlatButton players = new FlatButton("Current KookyKrafters", LauncherFonts.OPEN_SANS_REGULAR.deriveFont(12.0f));
-		players.setStyle(FlatButton.ButtonStyle.TRANSPARENT);
-		players.setButtonIcon(LauncherIcons.PLAYERCOUNT);
-		players.addActionListener(e -> BrowserUtil.openPage(PLAYER_COUNT_URL));
-		players.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
-
-		this.add(players);
-
 		FlatButton patreon = new FlatButton("Donate to Support KKMC", LauncherFonts.OPEN_SANS_REGULAR.deriveFont(12.0f));
 		patreon.setStyle(FlatButton.ButtonStyle.TRANSPARENT);
 		patreon.setButtonIcon(LauncherIcons.PATREON);
@@ -88,7 +73,7 @@ public class TitlebarPanel extends JPanel {
 
 		this.add(patreon);
 
-		FlatButton bug = new FlatButton("Report issue", LauncherFonts.OPEN_SANS_REGULAR.deriveFont(12.0f));
+		FlatButton bug = new FlatButton("Report an issue", LauncherFonts.OPEN_SANS_REGULAR.deriveFont(12.0f));
 		bug.setStyle(FlatButton.ButtonStyle.TRANSPARENT);
 		bug.setButtonIcon(LauncherIcons.BUG);
 		bug.addActionListener(e -> BrowserUtil.openPage(REPORT_BUG_URL));

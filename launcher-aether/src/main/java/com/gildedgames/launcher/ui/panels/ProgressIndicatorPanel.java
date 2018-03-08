@@ -1,7 +1,6 @@
 package com.gildedgames.launcher.ui.panels;
 
 import com.gildedgames.launcher.ui.components.FlatProgressbar;
-import com.gildedgames.launcher.ui.components.FlatSpinner;
 import com.gildedgames.launcher.ui.resources.LauncherFonts;
 import com.gildedgames.launcher.ui.resources.LauncherStyles;
 import com.gildedgames.launcher.util.IProgressReporter;
@@ -13,11 +12,9 @@ import com.skcraft.launcher.util.SwingExecutor;
 import net.miginfocom.swing.MigLayout;
 
 import javax.annotation.Nullable;
-import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.util.Timer;
@@ -99,21 +96,11 @@ public class ProgressIndicatorPanel extends JPanel implements IProgressReporter 
 	}
 
 	private void init() {
-		JPanel header = new JPanel(new BorderLayout());
-		header.setOpaque(false);
-
-		FlatSpinner spinner = new FlatSpinner(16);
-		spinner.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 8));
-
-		header.add(spinner, BorderLayout.WEST);
-
 		this.titleLabel = new JLabel();
 		this.titleLabel.setFont(LauncherFonts.OPEN_SANS_REGULAR.deriveFont(14.0f));
 		this.titleLabel.setForeground(Color.WHITE);
 
-		header.add(this.titleLabel, BorderLayout.CENTER);
-
-		this.add(header, "wrap");
+		this.add(this.titleLabel, "wrap");
 
 		this.progressbar = new FlatProgressbar();
 		this.progressbar.setPreferredSize(new Dimension(500, 5));

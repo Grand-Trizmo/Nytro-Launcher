@@ -1,15 +1,18 @@
 package com.gildedgames.launcher.ui.components;
 
-import com.gildedgames.launcher.ui.animations.TimedAnimation;
+import com.gildedgames.launcher.ui.animations.Animation;
 import com.gildedgames.launcher.ui.resources.LauncherFonts;
 import com.gildedgames.launcher.ui.resources.LauncherIcons;
+import com.gildedgames.launcher.ui.resources.LauncherStyles;
 import com.gildedgames.launcher.ui.resources.NewsFeedManager.NewsPost;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
+import com.skcraft.launcher.Launcher;
 import com.skcraft.launcher.util.SwingExecutor;
 
 import javax.annotation.Nullable;
+import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -25,7 +28,7 @@ public class NewsTile extends JComponent {
 			BORDER = new Color(255, 255, 255, 60);
 
 	private static final Font FONT_TITLE = LauncherFonts.OPEN_SANS_REGULAR.deriveFont(18.0f),
-			FONT_DATE = LauncherFonts.OPEN_SANS_REGULAR.deriveFont(12.0f),
+			FONT_DATE = LauncherFonts.OPEN_SANS_REGULAR.deriveFont(0f),
 			FONT_ERROR = LauncherFonts.OPEN_SANS_REGULAR.deriveFont(12.0f);
 
 	private static final Image WARNING_ICON = LauncherIcons.load("com/gildedgames/assets/icons/64/warn.png");
@@ -34,7 +37,7 @@ public class NewsTile extends JComponent {
 
 	private final NewsPost post;
 
-	private TimedAnimation hoverAnimation;
+	private Animation hoverAnimation;
 
 	private boolean hovered;
 
@@ -44,8 +47,8 @@ public class NewsTile extends JComponent {
 
 	public NewsTile(NewsPost post, ListenableFuture<Image> image) {
 		this.post = post;
-
-		this.hoverAnimation = new TimedAnimation(this);
+		
+		this.hoverAnimation = new Animation(this);
 
 		this.setPreferredSize(new Dimension(320, 160));
 		this.setOpaque(false);
@@ -64,7 +67,7 @@ public class NewsTile extends JComponent {
 			public void mouseEntered(MouseEvent e) {
 				NewsTile.this.setCursor(new Cursor(Cursor.HAND_CURSOR));
 				NewsTile.this.setHoverState(true);
-
+				
 				NewsTile.this.hoverAnimation.run(12, true);
 			}
 
@@ -72,7 +75,7 @@ public class NewsTile extends JComponent {
 			public void mouseExited(MouseEvent e) {
 				NewsTile.this.setCursor(Cursor.getDefaultCursor());
 				NewsTile.this.setHoverState(false);
-
+				
 				NewsTile.this.hoverAnimation.run(8, false);
 			}
 		});
@@ -118,15 +121,15 @@ public class NewsTile extends JComponent {
 		// Draw background
 		if (this.image != null) {
 			double scale = this.hoverAnimation.getProgress() * 0.3D;
-
+			
 			double aspect = (double) this.getWidth() / (double) this.getHeight();
-
+			
 			int x = (int) (-16.0D * scale * aspect);
 			int y = (int) (-16.0D * scale);
-
+			
 			int width = this.getWidth() + Math.abs(x * 2);
 			int height = this.getHeight() + Math.abs(y * 2);
-
+			
 			g2.drawImage(this.image, x, y, width, height, null);
 		} else {
 			g2.setColor(BACKGROUND);
@@ -161,23 +164,23 @@ public class NewsTile extends JComponent {
 			g2.fillRect(0, 0, this.getWidth(), this.getHeight());
 		}
 
-//		// Card bottom leaf
-//		g2.setColor(new Color(color.getRed(), color.getGreen(), color.getBlue(), 220));
-//		g2.fillRect(0, this.getHeight() - 48, this.getWidth(), 48);
-//
-//		// Draw title
-//		g2.setFont(FONT_TITLE);
-//		g2.setColor(Color.WHITE);
-//		g2.drawString(this.post.getTitle(), 6, this.getHeight() - 26);
-//
-//		// Draw date
-//		g2.setFont(FONT_DATE);
-//		g2.setColor(Color.LIGHT_GRAY);
-//		g2.drawString(DATE_FORMAT.format(this.post.getDate()), 6, this.getHeight() - 8);
-//
-//		// Draw lined border
-//		g2.setColor(BORDER);
-//		g2.drawRect(0, 0, this.getWidth() - 1, this.getHeight() - 1);
-//		g2.drawLine(0, this.getHeight() - 48, this.getWidth(), this.getHeight() - 48);
+		// Card bottom leaf
+		g2.setColor(new Color(color.getRed(), color.getGreen(), color.getBlue(), 0));
+		g2.fillRect(0, this.getHeight() - 48, this.getWidth(), 48);
+
+		// Draw title
+		g2.setFont(FONT_TITLE);
+		g2.setColor(Color.WHITE);
+		g2.drawString(this.post.getTitle(), 6, this.getHeight() - 26);
+
+		// Draw date
+		g2.setFont(FONT_DATE);
+		g2.setColor(Color.LIGHT_GRAY);
+		g2.drawString(DATE_FORMAT.format(this.post.getDate()), 6, this.getHeight() - 8);
+
+		// Draw lined border
+		g2.setColor(BORDER);
+		g2.drawRect(0, 0, this.getWidth() - 0, this.getHeight() - 0);
+		g2.drawLine(0, this.getHeight() - 0, this.getWidth(), this.getHeight() - 0);
 	}
 }

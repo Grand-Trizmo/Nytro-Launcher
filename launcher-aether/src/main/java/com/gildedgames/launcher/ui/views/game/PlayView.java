@@ -2,9 +2,7 @@ package com.gildedgames.launcher.ui.views.game;
 
 import com.gildedgames.launcher.launch.LaunchProcessHandler;
 import com.gildedgames.launcher.launch.LaunchSupervisor;
-import com.gildedgames.launcher.ui.IListeningView;
 import com.gildedgames.launcher.ui.LauncherFrame;
-import com.gildedgames.launcher.ui.animations.Animation;
 import com.gildedgames.launcher.ui.components.FlatButton;
 import com.gildedgames.launcher.ui.components.UserIndicator;
 import com.gildedgames.launcher.ui.panels.BannerPanel;
@@ -14,7 +12,6 @@ import com.gildedgames.launcher.ui.panels.ProgressIndicatorPanel;
 import com.gildedgames.launcher.ui.resources.LauncherFonts;
 import com.gildedgames.launcher.ui.resources.LauncherIcons;
 import com.gildedgames.launcher.ui.resources.NewsFeedManager;
-import com.gildedgames.launcher.ui.styles.FlatScrollbarUI;
 import com.gildedgames.launcher.ui.views.account.AccountListView;
 import com.gildedgames.launcher.ui.views.account.AccountRefreshView;
 import com.google.common.util.concurrent.FutureCallback;
@@ -51,7 +48,7 @@ import java.util.concurrent.Callable;
 
 import static com.skcraft.launcher.util.SharedLocale.tr;
 
-public class PlayView extends JPanel implements IListeningView {
+public class PlayView extends JPanel {
 	@Getter
 	private final InstanceTable instancesTable = new InstanceTable();
 
@@ -79,13 +76,9 @@ public class PlayView extends JPanel implements IListeningView {
 
 	private LauncherFrame frame;
 
-	private boolean isUpdating = false;
-
-	private LaunchSupervisor launchSupervisor;
+	private boolean canLaunch = true;
 
 	public PlayView(Launcher launcher, LauncherFrame frame) {
-		this.launchSupervisor = frame.getLaunchSupervisor();
-
 		this.userIndicator = new UserIndicator(frame.getAvatarManager());
 		this.instancesModel = new InstanceTableModel(launcher.getInstances());
 		this.launcher = launcher;
@@ -131,7 +124,7 @@ public class PlayView extends JPanel implements IListeningView {
 
 		JLabel profilesLabel = new JLabel("PROFILES");
 		profilesLabel.setFont(LauncherFonts.OPEN_SANS_REGULAR.deriveFont(14.0f));
-		profilesLabel.setForeground(new Color(200, 200, 200));
+		profilesLabel.setForeground(new Color(160, 160, 160));
 		profilesLabel.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
 
 		FlatButton refreshButton = new FlatButton("Refresh", LauncherFonts.OPEN_SANS_REGULAR.deriveFont(12.0f));
@@ -140,24 +133,13 @@ public class PlayView extends JPanel implements IListeningView {
 		refreshButton.setButtonIcon(LauncherIcons.REFRESH);
 		refreshButton.addActionListener(e -> this.refresh(true));
 
-		JPanel profilesHeader = new JPanel(new BorderLayout());
-		profilesHeader.setOpaque(false);
-		profilesHeader.add(refreshButton, BorderLayout.EAST);
-		profilesHeader.add(profilesLabel, BorderLayout.WEST);
-
-		JScrollPane instancesScroller = new JScrollPane(this.instancesTable);
-		instancesScroller.getViewport().setOpaque(false);
-		instancesScroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-		instancesScroller.getVerticalScrollBar().setUI(new FlatScrollbarUI(instancesScroller.getVerticalScrollBar()));
-		instancesScroller.setBorder(BorderFactory.createEmptyBorder());
-		instancesScroller.setBackground(new Color(0x283038));
-
-		JPanel left = new JPanel(new MigLayout("fill, insets 0", "[fill]", "[]4[]0[]12[]0[]0[]0"));
+		JPanel left = new JPanel(new MigLayout("fill, insets 0", "[fill]", "[]4[]0[]12[]8[]12[]0[]0"));
 		left.add(this.userIndicator, "wrap");
 		left.add(this.switchUserButton, "wrap");
 		left.add(optionsButton, "wrap");
-		left.add(profilesHeader, "wrap");
-		left.add(instancesScroller, "grow, push, wrap");
+		left.add(refreshButton, "wrap");
+		left.add(profilesLabel, "wrap");
+		left.add(this.instancesTable, "grow, push, wrap");
 		left.add(this.launchButton, "wrap");
 		left.setBackground(new Color(0x2f353b));
 
@@ -381,17 +363,13 @@ public class PlayView extends JPanel implements IListeningView {
 		Futures.addCallback(refreshInstancesFuture, new FutureCallback<InstanceList>() {
 			@Override
 			public void onSuccess(@Nullable InstanceList result) {
-				PlayView.this.refreshNews(force);
 
-				PlayView.this.bannerPanel.close();
 			}
 
 			@Override
 			public void onFailure(Throwable t) {
 				PlayView.this.bannerPanel.update(LauncherIcons.WARN, "There was a problem checking for updates.", BannerPanel.BannerType.ERROR);
 				PlayView.this.bannerPanel.bindActionHandler(LauncherIcons.REFRESH, "Refresh", () -> PlayView.this.refresh(force));
-
-				PlayView.this.refreshNews(false);
 			}
 		});
 
@@ -403,6 +381,8 @@ public class PlayView extends JPanel implements IListeningView {
 			}
 
 			this.requestFocus();
+
+			this.refreshNews(force);
 		}, SwingExecutor.INSTANCE);
 	}
 
@@ -412,6 +392,7 @@ public class PlayView extends JPanel implements IListeningView {
 		Futures.addCallback(refreshNewsFuture, new FutureCallback<NewsFeedManager.NewsFeed>() {
 			@Override
 			public void onSuccess(@Nullable NewsFeedManager.NewsFeed result) {
+				PlayView.this.bannerPanel.close();
 				PlayView.this.layoutNewsTiles(result);
 			}
 
@@ -424,7 +405,7 @@ public class PlayView extends JPanel implements IListeningView {
 	}
 
 	private void launch() {
-		if (this.isUpdating) {
+		if (!this.canLaunch) {
 			return;
 		}
 
@@ -450,7 +431,7 @@ public class PlayView extends JPanel implements IListeningView {
 
 			this.frame.getLauncherLayout().show(view);
 		} else {
-			this.setBusyUpdating(true);
+			this.setPlayButtonLocked(true);
 
 			BestEffortLoginCallable callable = new BestEffortLoginCallable(account);
 
@@ -464,7 +445,7 @@ public class PlayView extends JPanel implements IListeningView {
 
 				@Override
 				public void onFailure(Throwable t) {
-					PlayView.this.setBusyUpdating(false);
+					PlayView.this.setPlayButtonLocked(false);
 
 					PlayView.this.tryRelog(account);
 				}
@@ -478,7 +459,7 @@ public class PlayView extends JPanel implements IListeningView {
 		Updater updater = new Updater(this.launcher, instance);
 		updater.setOnline(true);
 
-		PlayView.this.setBusyUpdating(true);
+		PlayView.this.setPlayButtonLocked(true);
 
 		ObservableFuture<Instance> future = new ObservableFuture<>(this.launcher.getExecutor().submit(updater), updater);
 
@@ -489,28 +470,27 @@ public class PlayView extends JPanel implements IListeningView {
 		// Update the list of instances after updating
 		future.addListener(this::refreshInstances, SwingExecutor.INSTANCE);
 
-		future.addListener(() -> PlayView.this.setBusyUpdating(false), SwingExecutor.INSTANCE);
+		future.addListener(() -> PlayView.this.setPlayButtonLocked(false), SwingExecutor.INSTANCE);
 	}
 
-	private void setBusyUpdating(boolean value) {
+	private void setPlayButtonLocked(boolean value) {
 		this.launchButton.setStyle(value ? FlatButton.ButtonStyle.DISABLED : FlatButton.ButtonStyle.HIGHLIGHTED);
 
-		this.isUpdating = value;
-		this.frame.setUpdating(value);
+		this.canLaunch = !value;
 
 		this.launchButton.repaint();
 	}
 
 	private void launchSession(Session session, Instance instance) {
-		this.launchSupervisor.launch(this.progressIndicatorPanel, instance, session, new LaunchListenerImpl(this), new LaunchProcessHandler(this))
-				.addListener(() -> PlayView.this.setBusyUpdating(false), SwingExecutor.INSTANCE);
+		new LaunchSupervisor(this.launcher).launch(this.progressIndicatorPanel, instance, session, new LaunchListenerImpl(this), new LaunchProcessHandler(this))
+				.addListener(() -> PlayView.this.setPlayButtonLocked(false), SwingExecutor.INSTANCE);
 
 	}
 
 	private void refreshInstances() {
 		int row = this.instancesTable.getSelectedRow();
 
-		final Instance instance = row > 0 && row < this.launcher.getInstances().size() ? this.launcher.getInstances().get(row) : null;
+		final Instance instance = row > 0 ? this.launcher.getInstances().get(row) : null;
 
 		this.instancesModel.update();
 
@@ -549,11 +529,6 @@ public class PlayView extends JPanel implements IListeningView {
 		this.frame.getLauncherLayout().show(view);
 	}
 
-	@Override
-	public void reload() {
-		this.refresh(true);
-	}
-
 	private static class LaunchListenerImpl implements LaunchListener {
 		private final WeakReference<PlayView> viewRef;
 
@@ -578,7 +553,6 @@ public class PlayView extends JPanel implements IListeningView {
 			if (view != null) {
 				view.frame.dispose();
 			}
-			Animation.stopAll();
 		}
 
 		@Override

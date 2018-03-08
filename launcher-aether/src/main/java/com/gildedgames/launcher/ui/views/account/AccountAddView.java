@@ -177,7 +177,7 @@ public class AccountAddView extends JPanel {
 	}
 
 	protected String getHeader() {
-		return "The KookyKraft Launcher uses Minecraft, which requires a Mojang account to play.";
+		return "KookyKraft requires you to login to Mojang to play.";
 	}
 
 	public void setCancelable(boolean cancel) {

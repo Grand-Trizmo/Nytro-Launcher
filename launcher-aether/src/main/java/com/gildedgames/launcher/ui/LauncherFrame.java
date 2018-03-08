@@ -1,20 +1,17 @@
 package com.gildedgames.launcher.ui;
 
-import com.gildedgames.launcher.launch.LaunchSupervisor;
 import com.gildedgames.launcher.ui.panels.TitlebarPanel;
 import com.gildedgames.launcher.ui.resources.AvatarManager;
 import com.gildedgames.launcher.ui.resources.NewsFeedManager;
 import com.gildedgames.launcher.ui.views.OptionsView;
 import com.gildedgames.launcher.ui.views.account.AccountAddView;
 import com.gildedgames.launcher.ui.views.game.PlayView;
-import com.gildedgames.launcher.user.GameKeyManager;
 import com.gildedgames.launcher.util.ComponentResizer;
 import com.skcraft.launcher.Launcher;
 import com.skcraft.launcher.persistence.Persistence;
 import com.skcraft.launcher.swing.SwingHelper;
 import lombok.Getter;
 import lombok.NonNull;
-import lombok.Setter;
 import lombok.extern.java.Log;
 
 import javax.swing.BorderFactory;
@@ -32,9 +29,6 @@ public class LauncherFrame extends JFrame {
 
 	private final Launcher launcher;
 
-	@Getter
-	private final LaunchSupervisor launchSupervisor;
-
 	private TitlebarPanel titlebar;
 
 	private LauncherLayout layout = new LauncherLayout();
@@ -44,13 +38,6 @@ public class LauncherFrame extends JFrame {
 
 	@Getter
 	private NewsFeedManager newsFeedManager;
-
-	@Getter
-	private GameKeyManager keyManager;
-
-	@Setter
-	@Getter
-	private boolean isUpdating;
 
 	private JPanel contentPanel;
 
@@ -68,9 +55,6 @@ public class LauncherFrame extends JFrame {
 
 		this.avatarManager = AvatarManager.load(launcher);
 		this.newsFeedManager = NewsFeedManager.load(launcher);
-		this.keyManager = new GameKeyManager(this.launcher);
-
-		this.launchSupervisor = new LaunchSupervisor(this.launcher);
 
 		this.setUndecorated(true);
 		this.setBackground(new Color(0, 0, 0, 0));
@@ -79,7 +63,7 @@ public class LauncherFrame extends JFrame {
 
 		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		this.setMinimumSize(new Dimension(960, 580));
-		this.setPreferredSize(new Dimension(1200, 795));
+		this.setPreferredSize(new Dimension(1254, 804));
 		this.setMaximumSize(maxSize);
 
 		this.initComponents();

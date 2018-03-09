@@ -26,7 +26,7 @@ public class GameKeyManager {
 
 			return HttpRequest.get(HttpRequest.url(url))
 					.execute()
-					.expectResponseCode(200, 301)
+					.expectResponseCode(200)
 					.returnContent()
 					.asJson(KeyVerificationResponse.class);
 		});

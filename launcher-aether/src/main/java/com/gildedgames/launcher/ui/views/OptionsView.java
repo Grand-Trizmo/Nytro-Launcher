@@ -33,6 +33,7 @@ import java.nio.file.Path;
 import java.text.DecimalFormat;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Logger;
 
 public class OptionsView extends JPanel {
 	private final Set<SettingsPanel> savable = new HashSet<>();
@@ -343,21 +344,12 @@ public class OptionsView extends JPanel {
 
 					GeneralPanel.this.keyInputIndicator.setChecking(false);
 
-					if (result.isValid()) {
-						if (result.isRevoked()) {
-							GeneralPanel.this.keyInputIndicator.setText("The key has been revoked. Reason: " + result.getRevocationReason());
-							GeneralPanel.this.keyInputIndicator.setValid(true);
-						} else {
-							GeneralPanel.this.keyInputIndicator.setText("Verified");
-							GeneralPanel.this.keyInputIndicator.setValid(true);
-						}
+					if (result.packagesContainsKey(key)) {
+						GeneralPanel.this.keyInputIndicator.setText("Verified");
+						GeneralPanel.this.keyInputIndicator.setValid(true);
 					} else {
 						GeneralPanel.this.keyInputIndicator.setText("Invalid key");
 						GeneralPanel.this.keyInputIndicator.setValid(false);
-					}
-
-					if (result.isRevoked()) {
-						SwingHelper.showErrorDialog(OptionsView.this.frame, "The key you have entered has been revoked. Reason: \n\n" + result.getRevocationReason(), "Key verification error");
 					}
 
 					GeneralPanel.this.verifyKeyButton.setEnabled(true);
@@ -365,6 +357,7 @@ public class OptionsView extends JPanel {
 
 				@Override
 				public void onFailure(Throwable t) {
+					Logger.getGlobal().info(t.getMessage());
 					GeneralPanel.this.keyInputIndicator.setText("There was a problem checking the key. Please try again later.");
 					GeneralPanel.this.keyInputIndicator.setValid(false);
 					GeneralPanel.this.keyInputIndicator.setChecking(false);

@@ -1,14 +1,17 @@
 package com.gildedgames.launcher.user;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.skcraft.launcher.Launcher;
 import com.skcraft.launcher.util.HttpRequest;
 import lombok.Getter;
 
+import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.logging.Logger;
+
 public class GameKeyManager {
-	private static final String VERIFY_URL = "http://launcher.triz.moe/minecraft/launcher/packages.php%s";
+	private static final String VERIFY_URL = "https://launcher.triz.moe/minecraft/launcher/_upload/packages.php?key=%s";
 
 	private final Launcher launcher;
 
@@ -17,16 +20,13 @@ public class GameKeyManager {
 	}
 
 	public ListenableFuture<KeyVerificationResponse> validate(String key) {
-		if (key.length() != 36) {
-			return Futures.immediateFuture(KeyVerificationResponse.tooShort());
-		}
 
 		return this.launcher.getExecutor().submit(() -> {
 			String url = String.format(VERIFY_URL, key);
 
 			return HttpRequest.get(HttpRequest.url(url))
 					.execute()
-					.expectResponseCode(200)
+					.expectResponseCode(200, 301)
 					.returnContent()
 					.asJson(KeyVerificationResponse.class);
 		});
@@ -35,21 +35,40 @@ public class GameKeyManager {
 	public static class KeyVerificationResponse {
 		@JsonProperty
 		@Getter
-		private boolean valid;
+		private int minimumVersion;
 
 		@JsonProperty
 		@Getter
-		private boolean revoked;
+		private List<Packages> packages;
 
-		@JsonProperty
-		@Getter
-		private String revocationReason;
+		private static class Packages {
+			@JsonProperty
+			@Getter
+			private String name;
 
-		private static KeyVerificationResponse tooShort() {
-			KeyVerificationResponse response = new KeyVerificationResponse();
-			response.valid = false;
+			@JsonProperty
+			@Getter
+			private String title;
 
-			return response;
+			@JsonProperty
+			@Getter
+			private String version;
+
+			@JsonProperty
+			@Getter
+			private int priority;
+
+			@JsonProperty
+			@Getter
+			private String location;
+		}
+
+		public boolean packagesContainsKey(String key) {
+			AtomicBoolean yes = new AtomicBoolean(false);
+			packages.forEach(packages1 -> {
+				if (packages1.name.equals(key)) yes.set(true);
+			});
+			return yes.get();
 		}
 	}
 }

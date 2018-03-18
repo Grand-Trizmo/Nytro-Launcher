@@ -60,7 +60,8 @@ public class Pack {
     public void createGuideFolders() {
         new File(getSourceDir(), "config").mkdirs();
         new File(getSourceDir(), "mods").mkdirs();
-        new File(getSourceDir(), "resourcepacks").mkdirs();
+        new File(getSourceDir(), "resources").mkdirs();
+        new File(getSourceDir(), "scripts").mkdirs();
     }
 
     @JsonIgnore

@@ -306,7 +306,7 @@ public class PackManagerController {
         config.setLaunchModifier(launchModifier);
 
         FnPatternList userFiles = new FnPatternList();
-        userFiles.setInclude(Lists.newArrayList("options.txt", "optionsshaders.txt"));
+        userFiles.setInclude(Lists.newArrayList("mods", "scripts", "resources", "config", "servers.dat", "modpack"));
         userFiles.setExclude(Lists.<String>newArrayList());
         config.setUserFiles(userFiles);
     }

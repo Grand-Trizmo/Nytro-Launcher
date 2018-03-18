@@ -119,7 +119,6 @@ public class InstanceList {
                     File file = new File(dir, "instance.json");
                     Instance instance = Persistence.load(file, Instance.class);
                     instance.setDir(dir);
-                    instance.setName(dir.getName());
                     instance.setSelected(true);
                     instance.setLocal(true);
                     local.add(instance);

@@ -605,26 +605,26 @@ public class OptionsView extends JPanel {
 			this.addLabel("Official Release", c, 14.0f);
 
 			c.gridy = 2;
-			FlatButton gitlabAether = this.createURLButton("View the source code on GitLab", "https://git.gildedgames.com/GildedGames/Aether-Launcher", LauncherIcons.GITLAB);
-			this.add(gitlabAether, c);
+			FlatButton githublauncher = this.createURLButton("View the source code on Github", "https://github.com/grand-trizmo/KKMC-Launcher", LauncherIcons.GITHUB);
+			this.add(githublauncher, c);
 
 			c.gridy = 3;
-			FlatButton aetherWebsite = this.createURLButton("The official Aether website", "http://aetherii.com", LauncherIcons.WEB);
-			this.add(aetherWebsite, c);
+			this.add(Box.createVerticalStrut(12), c);
 
 			c.gridy = 4;
-			this.add(Box.createVerticalStrut(24), c);
+			FlatButton kookyWebsite = this.createURLButton("The official KookyKraft Website", "https://www.kookykraftmc.net", LauncherIcons.NET);
+			this.add(kookyWebsite, c);
 
 			c.gridy = 5;
-			this.addLabel("The Aether Launcher is made possible thanks to SKCraft's Launcher.", c, 12.0f);
+			this.add(Box.createVerticalStrut(12), c);
 
 			c.gridy = 6;
-			FlatButton skcraftButton = this.createURLButton("View SKCraft's Launcher on GitHub", "https://github.com/SKCraft/Launcher", LauncherIcons.WEB);
+			FlatButton skcraftButton = this.createURLButton("View SKCraft's Launcher on GitHub", "https://github.com/SKCraft/Launcher", LauncherIcons.NET);
 			this.add(skcraftButton, c);
 		}
 
 		private FlatButton createURLButton(String text, String url, ImageIcon icon) {
-			FlatButton btn = new FlatButton(text, LauncherFonts.OPEN_SANS_REGULAR.deriveFont(12.0f));
+			FlatButton btn = new FlatButton(text, LauncherFonts.OPEN_SANS_REGULAR.deriveFont(16.0f));
 			btn.setStyle(FlatButton.ButtonStyle.TRANSPARENT);
 			btn.setButtonIcon(icon);
 			btn.setAlign(FlatButton.AlignState.LEFT);

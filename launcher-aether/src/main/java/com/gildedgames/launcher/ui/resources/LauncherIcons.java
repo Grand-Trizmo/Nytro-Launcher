@@ -21,13 +21,14 @@ public class LauncherIcons {
 
 	public static final ImageIcon BUG, WARN;
 
-	public static final ImageIcon SHOP, GITLAB, WEB, KKMC;
+	public static final ImageIcon SHOP, WEB, KKMC;
 
 	public static final ImageIcon WINDOW_MINIMIZE, WINDOW_CLOSE, WINDOW_MAXIMIZE;
 
 	public static final ImageIcon WINDOW_ICON;
 
 	public static final ImageIcon INPUT_VALID, INPUT_INVALID;
+	public static final ImageIcon GITHUB, NET;
 
 	static {
 		GEAR = loadIcon("com/gildedgames/assets/icons/16/gear.png");
@@ -41,7 +42,6 @@ public class LauncherIcons {
 
 		KKMC = loadIcon("com/gildedgames/assets/icons/16/kkmc.png");
 		SHOP = loadIcon("com/gildedgames/assets/icons/16/shop.png");
-		GITLAB = loadIcon("com/gildedgames/assets/icons/16/gitlab.png");
 		WEB = loadIcon("com/gildedgames/assets/icons/16/web.png");
 
 		WINDOW_MINIMIZE = loadIcon("com/gildedgames/assets/icons/16/minimize.png");
@@ -52,6 +52,10 @@ public class LauncherIcons {
 
 		INPUT_VALID = loadIcon("com/gildedgames/assets/icons/16/valid.png");
 		INPUT_INVALID = loadIcon("com/gildedgames/assets/icons/16/invalid.png");
+
+		GITHUB = loadIcon("com/gildedgames/assets/icons/48/github.png");
+		NET = loadIcon("com/gildedgames/assets/icons/48/net.png");
+
 
 	}
 

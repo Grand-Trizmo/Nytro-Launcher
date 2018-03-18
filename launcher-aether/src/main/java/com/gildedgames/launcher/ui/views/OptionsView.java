@@ -605,21 +605,21 @@ public class OptionsView extends JPanel {
 			this.addLabel("Official Release", c, 14.0f);
 
 			c.gridy = 2;
-			FlatButton githublauncher = this.createURLButton("View the source code on Github", "https://github.com/grand-trizmo/KKMC-Launcher", LauncherIcons.GITHUB);
+			FlatButton githublauncher = this.createURLButton("          View the source code on Github", "https://github.com/grand-trizmo/KKMC-Launcher", LauncherIcons.GITHUB);
 			this.add(githublauncher, c);
 
 			c.gridy = 3;
 			this.add(Box.createVerticalStrut(12), c);
 
 			c.gridy = 4;
-			FlatButton kookyWebsite = this.createURLButton("The official KookyKraft Website", "https://www.kookykraftmc.net", LauncherIcons.NET);
+			FlatButton kookyWebsite = this.createURLButton("          The official KookyKraft Website", "https://www.kookykraftmc.net", LauncherIcons.NET);
 			this.add(kookyWebsite, c);
 
 			c.gridy = 5;
 			this.add(Box.createVerticalStrut(12), c);
 
 			c.gridy = 6;
-			FlatButton skcraftButton = this.createURLButton("View SKCraft's Launcher on GitHub", "https://github.com/SKCraft/Launcher", LauncherIcons.NET);
+			FlatButton skcraftButton = this.createURLButton("          View SKCraft's Launcher on GitHub", "https://github.com/SKCraft/Launcher", LauncherIcons.NET);
 			this.add(skcraftButton, c);
 		}
 

@@ -159,7 +159,7 @@ public class PlayView extends JPanel implements IListeningView {
 		left.add(profilesHeader, "wrap");
 		left.add(instancesScroller, "grow, push, wrap");
 		left.add(this.launchButton, "wrap");
-		left.setBackground(new Color(0x2f353b));
+		left.setBackground(new Color(0x424242));
 
 		this.launcher.getUpdateManager().addPropertyChangeListener(evt -> {
 			if (evt.getPropertyName().equals("pendingUpdate")) {
@@ -184,10 +184,10 @@ public class PlayView extends JPanel implements IListeningView {
 
 		this.instancesTable.setModel(this.instancesModel);
 		this.instancesTable.setRowHeight(40);
-		this.instancesTable.setBackground(new Color(0x283038));
+		this.instancesTable.setBackground(new Color(0x262626));
 		this.instancesTable.setForeground(Color.WHITE);
 		this.instancesTable.setSelectionForeground(Color.WHITE);
-		this.instancesTable.setSelectionBackground(new Color(0x4c5d6e));
+		this.instancesTable.setSelectionBackground(new Color(0x4527A0));
 		this.instancesTable.setBorder(BorderFactory.createEmptyBorder());
 		this.instancesTable.setFocusable(false);
 		this.instancesTable.getSelectionModel().addListSelectionListener(e -> {

@@ -72,11 +72,11 @@ public class AccountListView extends JPanel {
 		this.table.setRowHeight(48);
 		this.table.getColumnModel().getColumn(0).setMaxWidth(54);
 		this.table.setTableHeader(null);
-		this.table.setBackground(new Color(0x283038));
+		this.table.setBackground(new Color(0x424242));
 		this.table.setBorder(BorderFactory.createEmptyBorder());
 		this.table.setFont(LauncherFonts.OPEN_SANS_REGULAR.deriveFont(12.0f));
 		this.table.setForeground(Color.WHITE);
-		this.table.setSelectionBackground(new Color(0x4c5d6e));
+		this.table.setSelectionBackground(new Color(0x7C4DFF));
 		this.table.setRowSelectionInterval(0, 0);
 
 		JScrollPane scroller = new JScrollPane(this.table);

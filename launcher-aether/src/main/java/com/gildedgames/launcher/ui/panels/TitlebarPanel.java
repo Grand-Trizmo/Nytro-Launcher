@@ -23,9 +23,11 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
 
 public class TitlebarPanel extends JPanel {
-	private static final String REPORT_BUG_URL = "http://go.aetherii.com/2e8q1vf";
+	private static final String SUPPORT_URL = "https://discord.gg/5DSkt73";
 
-	private static final String PATREON_URL = "https://go.aetherii.com/2eGwM8b";
+	private static final String SHOP_URL = "http://shop.kookykraftmc.com";
+
+	private static final String PLAYER_COUNT_URL = "http://kookykraftmc.net/index.php?pages/info/";
 
 	private final LauncherFrame frame;
 
@@ -65,18 +67,26 @@ public class TitlebarPanel extends JPanel {
 
 		this.add(updateButton);
 
-		FlatButton patreon = new FlatButton("Support us on Patreon", LauncherFonts.OPEN_SANS_REGULAR.deriveFont(12.0f));
-		patreon.setStyle(FlatButton.ButtonStyle.TRANSPARENT);
-		patreon.setButtonIcon(LauncherIcons.PATREON);
-		patreon.addActionListener(e -> BrowserUtil.openPage(PATREON_URL));
-		patreon.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+		FlatButton players = new FlatButton("Current KookyKrafters", LauncherFonts.OPEN_SANS_REGULAR.deriveFont(12.0f));
+		players.setStyle(FlatButton.ButtonStyle.TRANSPARENT);
+		players.setButtonIcon(LauncherIcons.KKMC);
+		players.addActionListener(e -> BrowserUtil.openPage(PLAYER_COUNT_URL));
+		players.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
 
-		this.add(patreon);
+		this.add(players);
 
-		FlatButton bug = new FlatButton("Report issue", LauncherFonts.OPEN_SANS_REGULAR.deriveFont(12.0f));
+		FlatButton shop = new FlatButton("Donate to Support KKMC", LauncherFonts.OPEN_SANS_REGULAR.deriveFont(12.0f));
+		shop.setStyle(FlatButton.ButtonStyle.TRANSPARENT);
+		shop.setButtonIcon(LauncherIcons.SHOP);
+		shop.addActionListener(e -> BrowserUtil.openPage(SHOP_URL));
+		shop.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+
+		this.add(shop);
+
+		FlatButton bug = new FlatButton("Support", LauncherFonts.OPEN_SANS_REGULAR.deriveFont(12.0f));
 		bug.setStyle(FlatButton.ButtonStyle.TRANSPARENT);
 		bug.setButtonIcon(LauncherIcons.BUG);
-		bug.addActionListener(e -> BrowserUtil.openPage(REPORT_BUG_URL));
+		bug.addActionListener(e -> BrowserUtil.openPage(SUPPORT_URL));
 		bug.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
 
 		this.add(bug);

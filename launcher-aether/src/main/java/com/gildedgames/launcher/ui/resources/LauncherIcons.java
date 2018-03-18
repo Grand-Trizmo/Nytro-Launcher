@@ -21,7 +21,7 @@ public class LauncherIcons {
 
 	public static final ImageIcon BUG, WARN;
 
-	public static final ImageIcon PATREON, GITLAB, WEB;
+	public static final ImageIcon SHOP, GITLAB, WEB, KKMC;
 
 	public static final ImageIcon WINDOW_MINIMIZE, WINDOW_CLOSE, WINDOW_MAXIMIZE;
 
@@ -39,7 +39,8 @@ public class LauncherIcons {
 		BUG = loadIcon("com/gildedgames/assets/icons/16/bug.png");
 		WARN = loadIcon("com/gildedgames/assets/icons/16/warn.png");
 
-		PATREON = loadIcon("com/gildedgames/assets/icons/16/patreon.png");
+		KKMC = loadIcon("com/gildedgames/assets/icons/16/kkmc.png");
+		SHOP = loadIcon("com/gildedgames/assets/icons/16/shop.png");
 		GITLAB = loadIcon("com/gildedgames/assets/icons/16/gitlab.png");
 		WEB = loadIcon("com/gildedgames/assets/icons/16/web.png");
 

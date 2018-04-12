@@ -113,10 +113,10 @@ public class BuilderConfigDialog extends JDialog {
         SwingHelper.removeOpaqueness(container);
         container.setLayout(new MigLayout("insets dialog"));
 
-        container.add(new JLabel("Author:"));
+        container.add(new JLabel("Pack Name:"));
         container.add(nameText, "span");
 
-        container.add(new JLabel("Pack Name:"));
+        container.add(new JLabel("Author:"));
         container.add(titleText, "span");
 
         container.add(new JLabel("Game Version:"));

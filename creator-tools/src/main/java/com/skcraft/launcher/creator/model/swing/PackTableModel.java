@@ -36,7 +36,7 @@ public class PackTableModel extends AbstractTableModel {
             case 1:
                 return "Name";
             case 2:
-                return "Title";
+                return "Author";
             case 3:
                 return "Game Version";
             case 4:

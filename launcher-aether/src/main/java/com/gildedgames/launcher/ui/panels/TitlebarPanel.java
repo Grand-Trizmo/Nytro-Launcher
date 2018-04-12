@@ -25,9 +25,9 @@ import java.awt.event.WindowEvent;
 public class TitlebarPanel extends JPanel {
 	private static final String SUPPORT_URL = "https://discord.gg/5DSkt73";
 
-	private static final String SHOP_URL = "http://shop.kookykraftmc.com";
+	private static final String SHOP_URL = "http://shop.nytro.co";
 
-	private static final String PLAYER_COUNT_URL = "http://kookykraftmc.net/index.php?pages/info/";
+	private static final String PLAYER_COUNT_URL = "http://nytro.co";
 
 	private final LauncherFrame frame;
 
@@ -67,7 +67,7 @@ public class TitlebarPanel extends JPanel {
 
 		this.add(updateButton);
 
-		FlatButton players = new FlatButton("Current KookyKrafters", LauncherFonts.OPEN_SANS_REGULAR.deriveFont(12.0f));
+		FlatButton players = new FlatButton("Current Players on Nytro", LauncherFonts.OPEN_SANS_REGULAR.deriveFont(12.0f));
 		players.setStyle(FlatButton.ButtonStyle.TRANSPARENT);
 		players.setButtonIcon(LauncherIcons.KKMC);
 		players.addActionListener(e -> BrowserUtil.openPage(PLAYER_COUNT_URL));
@@ -75,7 +75,7 @@ public class TitlebarPanel extends JPanel {
 
 		this.add(players);
 
-		FlatButton shop = new FlatButton("Donate to Support KKMC", LauncherFonts.OPEN_SANS_REGULAR.deriveFont(12.0f));
+		FlatButton shop = new FlatButton("Donate to Support Nytro", LauncherFonts.OPEN_SANS_REGULAR.deriveFont(12.0f));
 		shop.setStyle(FlatButton.ButtonStyle.TRANSPARENT);
 		shop.setButtonIcon(LauncherIcons.SHOP);
 		shop.addActionListener(e -> BrowserUtil.openPage(SHOP_URL));

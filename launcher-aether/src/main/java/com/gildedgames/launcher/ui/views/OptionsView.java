@@ -285,7 +285,7 @@ public class OptionsView extends JPanel {
 
 			c.gridy = 13;
 
-			this.addLabel("Game keys unlock special access to features and other goodies. Every key is unique.", c, 12.0f);
+			this.addLabel("Game keys unlock special access to features and other goodies.", c, 12.0f);
 
 			c.gridy = 14;
 
@@ -605,14 +605,14 @@ public class OptionsView extends JPanel {
 			this.addLabel("Official Release", c, 14.0f);
 
 			c.gridy = 2;
-			FlatButton githublauncher = this.createURLButton("          View the source code on Github", "https://github.com/grand-trizmo/KKMC-Launcher", LauncherIcons.GITHUB);
+			FlatButton githublauncher = this.createURLButton("          View the source code on Github", "https://github.com/grand-trizmo/Nytro-Launcher", LauncherIcons.GITHUB);
 			this.add(githublauncher, c);
 
 			c.gridy = 3;
 			this.add(Box.createVerticalStrut(12), c);
 
 			c.gridy = 4;
-			FlatButton kookyWebsite = this.createURLButton("          The official KookyKraft Website", "https://www.kookykraftmc.net", LauncherIcons.NET);
+			FlatButton kookyWebsite = this.createURLButton("          The official Nytro Website", "https://www.nytro.co", LauncherIcons.NET);
 			this.add(kookyWebsite, c);
 
 			c.gridy = 5;

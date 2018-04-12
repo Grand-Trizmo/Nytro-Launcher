@@ -187,7 +187,7 @@ public class PlayView extends JPanel implements IListeningView {
 		this.instancesTable.setBackground(new Color(0x262626));
 		this.instancesTable.setForeground(Color.WHITE);
 		this.instancesTable.setSelectionForeground(Color.WHITE);
-		this.instancesTable.setSelectionBackground(new Color(0x4527A0));
+		this.instancesTable.setSelectionBackground(new Color(0x0a7cd2));
 		this.instancesTable.setBorder(BorderFactory.createEmptyBorder());
 		this.instancesTable.setFocusable(false);
 		this.instancesTable.getSelectionModel().addListSelectionListener(e -> {
@@ -223,7 +223,7 @@ public class PlayView extends JPanel implements IListeningView {
 		splitPane.setDividerSize(0);
 		splitPane.setOpaque(false);
 
-		JPanel container = new ImagePanel("com/gildedgames/assets/images/background.jpg");
+		JPanel container = new ImagePanel("com/gildedgames/assets/images/background.png");
 		container.setLayout(new BorderLayout());
 		container.add(splitPane, BorderLayout.CENTER);
 

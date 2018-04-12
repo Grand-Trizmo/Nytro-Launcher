@@ -13,10 +13,10 @@ import java.awt.event.MouseEvent;
 
 public class FlatButton extends JButton {
 	public enum ButtonStyle {
-		NORMAL(new Color(0x651FFF), new Color(0x7C4DFF), new Color(0x6200EA), Color.WHITE),
+		NORMAL(new Color(0x0a7cd2), new Color(0x0a1488), new Color(0x260b92), Color.WHITE),
 		DISABLED(new Color(0x777777), new Color(0x777777), new Color(0x777777), new Color(0x444444)),
-		LIGHT(new Color(0x651FFF), new Color(0x7C4DFF), new Color(0x6200EA), Color.WHITE),
-		HIGHLIGHTED(new Color(0x651FFF), new Color(0x7C4DFF), new Color(0x6200EA), Color.WHITE),
+		LIGHT(new Color(0x0a7cd2), new Color(0x0a1488), new Color(0x260b92), Color.WHITE),
+		HIGHLIGHTED(new Color(0x0a7cd2), new Color(0x0a1488), new Color(0x260b92), Color.WHITE),
 		TRANSPARENT(null, null, new Color(0, 0, 0, 40), Color.WHITE);
 
 		private final Color bgNormal, bgHover, bgPressed;

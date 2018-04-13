@@ -147,7 +147,7 @@ public class InstanceList {
                     boolean foundLocal = false;
 
                     for (Instance instance : local) {
-                        if (instance.getTitle().equalsIgnoreCase(manifest.getTitle())) {
+                        if (instance.getTitle().equalsIgnoreCase(manifest.getName())) {
                             foundLocal = true;
 
                             instance.setTitle(manifest.getTitle());
@@ -168,7 +168,7 @@ public class InstanceList {
                     }
 
                     if (!foundLocal) {
-                        File dir = new File(launcher.getInstancesDir(), manifest.getTitle());
+                        File dir = new File(launcher.getInstancesDir(), manifest.getName());
                         File file = new File(dir, "instance.json");
                         Instance instance = Persistence.load(file, Instance.class);
                         instance.setDir(dir);

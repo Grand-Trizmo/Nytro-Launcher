@@ -13,7 +13,7 @@ import java.awt.event.ActionListener;
 
 public class BannerPanel extends JPanel {
 	public enum BannerType {
-		INFO(new Color(0x4A148C)),
+		INFO(new Color(0x0a7cd2)),
 		ERROR(new Color(0xc62828));
 
 		private final Color color;

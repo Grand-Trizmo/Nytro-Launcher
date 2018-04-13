@@ -177,7 +177,7 @@ public class AccountAddView extends JPanel {
 	}
 
 	protected String getHeader() {
-		return "The KKMC Launcher is a mod for Minecraft, which requires a Mojang account to play.";
+		return "The Nytro Launcher is a modded Network for Minecraft, which requires a Mojang account to play.";
 	}
 
 	public void setCancelable(boolean cancel) {

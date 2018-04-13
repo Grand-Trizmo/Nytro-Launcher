@@ -8,7 +8,7 @@ import java.awt.Graphics2D;
 public class FlatProgressbar extends JProgressBar {
 	private static final Color COLOR_UNFILLED = new Color(119, 119, 119);
 
-	private static final Color COLOR_FILLED = new Color(0x651FFF);
+	private static final Color COLOR_FILLED = new Color(0x0a7cd2);
 
 	@Override
 	public void paintComponent(Graphics g) {

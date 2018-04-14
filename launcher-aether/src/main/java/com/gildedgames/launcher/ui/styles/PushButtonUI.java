@@ -13,8 +13,8 @@ public class PushButtonUI extends BasicButtonUI {
 	private static final Color UNSELECTED_HOVER_FILL = new Color(0x666666),
 			UNSELECTED_FILL = new Color(0x555555);
 
-	private static final Color SELECTED_HOVER_FILL = new Color(0x7C4DFF),
-			SELECTED_FILL = new Color(0x651FFF);
+	private static final Color SELECTED_HOVER_FILL = new Color(0x0a1488),
+			SELECTED_FILL = new Color(0x0a7cd2);
 
 	private static final Color KNOB_FILL = new Color(0xffffff);
 

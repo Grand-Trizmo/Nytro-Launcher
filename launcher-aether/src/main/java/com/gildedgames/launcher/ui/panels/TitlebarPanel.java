@@ -42,14 +42,14 @@ public class TitlebarPanel extends JPanel {
 		JLabel icon = new JLabel();
 		icon.setIcon(LauncherIcons.WINDOW_ICON);
 		icon.setForeground(new Color(200, 200, 200, 255));
-		icon.setFont(font.deriveFont(12.0f));
+		icon.setFont(font.deriveFont(16.0f));
 		icon.setBorder(BorderFactory.createEmptyBorder(8, 12, 8, 8));
 
 		this.add(icon);
 
 		JLabel title = new JLabel(this.frame.getTitle());
 		title.setForeground(new Color(200, 200, 200, 255));
-		title.setFont(font.deriveFont(12.0f));
+		title.setFont(font.deriveFont(16.0f));
 
 		this.add(title);
 
@@ -66,7 +66,7 @@ public class TitlebarPanel extends JPanel {
 		});
 
 		this.add(updateButton);
-
+/*
 		FlatButton players = new FlatButton("Current Players on Nytro", LauncherFonts.OPEN_SANS_REGULAR.deriveFont(12.0f));
 		players.setStyle(FlatButton.ButtonStyle.TRANSPARENT);
 		players.setButtonIcon(LauncherIcons.KKMC);
@@ -74,8 +74,9 @@ public class TitlebarPanel extends JPanel {
 		players.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
 
 		this.add(players);
+*/
 
-		FlatButton shop = new FlatButton("Donate to Support Nytro", LauncherFonts.OPEN_SANS_REGULAR.deriveFont(12.0f));
+		FlatButton shop = new FlatButton("Donate to support Nytro", LauncherFonts.OPEN_SANS_REGULAR.deriveFont(13.5f));
 		shop.setStyle(FlatButton.ButtonStyle.TRANSPARENT);
 		shop.setButtonIcon(LauncherIcons.SHOP);
 		shop.addActionListener(e -> BrowserUtil.openPage(SHOP_URL));
@@ -83,7 +84,7 @@ public class TitlebarPanel extends JPanel {
 
 		this.add(shop);
 
-		FlatButton bug = new FlatButton("Support", LauncherFonts.OPEN_SANS_REGULAR.deriveFont(12.0f));
+		FlatButton bug = new FlatButton("Support", LauncherFonts.OPEN_SANS_REGULAR.deriveFont(13.5f));
 		bug.setStyle(FlatButton.ButtonStyle.TRANSPARENT);
 		bug.setButtonIcon(LauncherIcons.BUG);
 		bug.addActionListener(e -> BrowserUtil.openPage(SUPPORT_URL));

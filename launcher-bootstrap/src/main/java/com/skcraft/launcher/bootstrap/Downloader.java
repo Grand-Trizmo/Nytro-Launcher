@@ -44,7 +44,7 @@ public class Downloader implements Runnable, ProgressObservable {
             log.log(Level.WARNING, "Interrupted");
             System.exit(0);
         } catch (Throwable t) {
-            log.log(Level.WARNING, "Failed to download KKMC Launcher", t);
+            log.log(Level.WARNING, "Failed to download the Nytro Launcher", t);
             SwingHelper.showErrorDialog(null, tr("errors.failedDownloadError"), tr("errorTitle"), t);
             System.exit(0);
         }

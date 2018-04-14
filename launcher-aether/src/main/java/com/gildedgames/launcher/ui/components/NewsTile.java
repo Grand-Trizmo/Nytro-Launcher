@@ -163,7 +163,7 @@ public class NewsTile extends JComponent {
 
 		// Card bottom leaf
 		g2.setColor(new Color(color.getRed(), color.getGreen(), color.getBlue(), 220));
-		g2.fillRect(0, this.getHeight() - 48, this.getWidth(), 48);
+		g2.fillRect(0, this.getHeight() - 0, this.getWidth(), 48);
 
 		// Draw title
 		g2.setFont(FONT_TITLE);
@@ -171,13 +171,13 @@ public class NewsTile extends JComponent {
 		g2.drawString(this.post.getTitle(), 6, this.getHeight() - 26);
 
 		// Draw date
-		g2.setFont(FONT_DATE);
-		g2.setColor(Color.LIGHT_GRAY);
-		g2.drawString(DATE_FORMAT.format(this.post.getDate()), 6, this.getHeight() - 8);
+//		g2.setFont(FONT_DATE);
+//		g2.setColor(Color.LIGHT_GRAY);
+//		g2.drawString(DATE_FORMAT.format(this.post.getDate()), 6, this.getHeight() - 8);
 
 		// Draw lined border
 		g2.setColor(BORDER);
 		g2.drawRect(0, 0, this.getWidth() - 1, this.getHeight() - 1);
-		g2.drawLine(0, this.getHeight() - 48, this.getWidth(), this.getHeight() - 48);
+		g2.drawLine(0, this.getHeight() - 0, this.getWidth(), this.getHeight() - 48);
 	}
 }

@@ -79,7 +79,7 @@ public class LauncherFrame extends JFrame {
 
 		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		this.setMinimumSize(new Dimension(960, 580));
-		this.setPreferredSize(new Dimension(1154, 640));
+		this.setPreferredSize(new Dimension(1150, 800));
 		this.setMaximumSize(maxSize);
 
 		this.initComponents();

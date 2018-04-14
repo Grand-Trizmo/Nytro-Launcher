@@ -41,7 +41,7 @@ public class NewsFeedPanel extends JPanel {
 			Color color = new Color(section.getColor());
 
 			JPanel row = new TransparentPanel(new BorderLayout());
-			row.setBackground(new Color(color.getRed(), color.getGreen(), color.getBlue(), 120));
+			row.setBackground(new Color(color.getRed(), color.getGreen(), color.getBlue(), 0));
 			row.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10));
 
 			this.list.add(row);

@@ -76,7 +76,7 @@ public class TitlebarPanel extends JPanel {
 		this.add(players);
 */
 
-		FlatButton shop = new FlatButton("Donate to support Nytro", LauncherFonts.OPEN_SANS_REGULAR.deriveFont(13.5f));
+		FlatButton shop = new FlatButton("Donate to support TIMETHECAR", LauncherFonts.OPEN_SANS_REGULAR.deriveFont(13.5f));
 		shop.setStyle(FlatButton.ButtonStyle.TRANSPARENT);
 		shop.setButtonIcon(LauncherIcons.SHOP);
 		shop.addActionListener(e -> BrowserUtil.openPage(SHOP_URL));

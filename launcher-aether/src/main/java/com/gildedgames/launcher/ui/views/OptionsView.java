@@ -619,7 +619,7 @@ public class OptionsView extends JPanel {
 			this.add(Box.createVerticalStrut(12), c);
 
 			c.gridy = 6;
-			FlatButton skcraftButton = this.createURLButton("          View SKCraft's Launcher on GitHub", "https://github.com/SKCraft/Launcher", LauncherIcons.NET);
+			FlatButton skcraftButton = this.createURLButton("          View SKCraft's Launcher on GitHub", "https://github.com/SKCraft/Launcher", LauncherIcons.GITHUB);
 			this.add(skcraftButton, c);
 		}
 

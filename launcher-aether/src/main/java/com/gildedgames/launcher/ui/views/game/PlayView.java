@@ -183,11 +183,11 @@ public class PlayView extends JPanel implements IListeningView {
 		}
 
 		this.instancesTable.setModel(this.instancesModel);
-		this.instancesTable.setRowHeight(40);
+		this.instancesTable.setRowHeight(47);
 		this.instancesTable.setBackground(new Color(0x262626));
 		this.instancesTable.setForeground(Color.WHITE);
 		this.instancesTable.setSelectionForeground(Color.WHITE);
-		this.instancesTable.setSelectionBackground(new Color(0x0a7cd2));
+		this.instancesTable.setSelectionBackground(new Color(0x0a1488));
 		this.instancesTable.setBorder(BorderFactory.createEmptyBorder());
 		this.instancesTable.setFocusable(false);
 		this.instancesTable.getSelectionModel().addListSelectionListener(e -> {

@@ -23,7 +23,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
 
 public class TitlebarPanel extends JPanel {
-	private static final String SUPPORT_URL = "https://discord.gg/5DSkt73";
+	private static final String SUPPORT_URL = "https://discord.gg/UgeRyED";
 
 	private static final String SHOP_URL = "http://shop.nytro.co";
 
@@ -76,7 +76,7 @@ public class TitlebarPanel extends JPanel {
 		this.add(players);
 */
 
-		FlatButton shop = new FlatButton("Donate to support TIMETHECAR", LauncherFonts.OPEN_SANS_REGULAR.deriveFont(13.5f));
+		FlatButton shop = new FlatButton("   Donate to support Nytro", LauncherFonts.OPEN_SANS_REGULAR.deriveFont(13.5f));
 		shop.setStyle(FlatButton.ButtonStyle.TRANSPARENT);
 		shop.setButtonIcon(LauncherIcons.SHOP);
 		shop.addActionListener(e -> BrowserUtil.openPage(SHOP_URL));
@@ -84,7 +84,7 @@ public class TitlebarPanel extends JPanel {
 
 		this.add(shop);
 
-		FlatButton bug = new FlatButton("Support", LauncherFonts.OPEN_SANS_REGULAR.deriveFont(13.5f));
+		FlatButton bug = new FlatButton("   Support", LauncherFonts.OPEN_SANS_REGULAR.deriveFont(13.5f));
 		bug.setStyle(FlatButton.ButtonStyle.TRANSPARENT);
 		bug.setButtonIcon(LauncherIcons.BUG);
 		bug.addActionListener(e -> BrowserUtil.openPage(SUPPORT_URL));

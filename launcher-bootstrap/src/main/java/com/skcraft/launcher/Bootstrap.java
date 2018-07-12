@@ -55,9 +55,11 @@ public class Bootstrap {
             return;
         }
 
-        Bootstrap bootstrap = new Bootstrap(portable, args);
+        if (is32BitJava()) {
+            JOptionPane.showMessageDialog(null, "You're on 32 bit Java, packs may not work well. We highly recommend updating to 64 bit Java.", "Outdated Java", JOptionPane.ERROR_MESSAGE);
+        }
 
-        Bootstrap.addLetsEncryptSSL();
+        Bootstrap bootstrap = new Bootstrap(portable, args);
 
         try {
             bootstrap.cleanup();
@@ -86,13 +88,12 @@ public class Bootstrap {
         return System.getProperty("java.version").startsWith("1.8.");
     }
 
+    private static boolean is32BitJava() {
+        return !System.getProperty("sun.arch.data.model").equals("64");
+    }
+
     public void cleanup() {
-        File[] files = binariesDir.listFiles(new FileFilter() {
-            @Override
-            public boolean accept(File pathname) {
-                return pathname.getName().endsWith(".tmp");
-            }
-        });
+        File[] files = binariesDir.listFiles(pathname -> pathname.getName().endsWith(".tmp"));
 
         if (files != null) {
             for (File file : files) {
@@ -103,7 +104,7 @@ public class Bootstrap {
 
     public void launch() throws Throwable {
         File[] files = binariesDir.listFiles(new LauncherBinary.Filter());
-        List<LauncherBinary> binaries = new ArrayList<LauncherBinary>();
+        List<LauncherBinary> binaries = new ArrayList<>();
 
         if (files != null) {
             for (File file : files) {
